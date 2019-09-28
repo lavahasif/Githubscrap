@@ -42,12 +42,28 @@ def getdwonloadlink():
 
 
 def download(url, file_name):
-    get_response = requests.get(url, stream=True)
+    # get_response = requests.get(url, stream=True)
     file_name = url.split("/")[-3] + ".zip"
-    with open(file_name, 'wb') as f:
-        for chunk in get_response.iter_content(chunk_size=1024):
+    r = requests.get(url, stream=True)
+    # Total size in bytes.
+    total_size = int(r.headers.get('content-length', 0))
+    block_size = 1024  # 1 Kibibyte
+    t = tqdm(total=total_size, unit='iB', unit_scale=True)
+    print(file_name)
+    with open(f'{file_name}===========>', 'wb') as f:
+        for chunk in r.iter_content(block_size):
             if chunk:  # filter out keep-alive new chunks
                 f.write(chunk)
+                t.update(len(chunk))
+
+
+# def download(url, file_name):
+#     get_response = requests.get(url, stream=True)
+#     file_name = url.split("/")[-3] + ".zip"
+#     with open(file_name, 'wb') as f:
+#         for chunk in get_response.iter_content(chunk_size=1024):
+#             if chunk:  # filter out keep-alive new chunks
+#                 f.write(chunk)
 
 
 def downloadlink():
