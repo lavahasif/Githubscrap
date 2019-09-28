@@ -1,7 +1,8 @@
-import pandas as pd
+from pd import  pandas
 import requests
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
+from tqdm import  tqdm
 
 ii = 1
 repository = []
@@ -49,8 +50,8 @@ def download(url, file_name):
     total_size = int(r.headers.get('content-length', 0))
     block_size = 1024  # 1 Kibibyte
     t = tqdm(total=total_size, unit='iB', unit_scale=True)
-    print(file_name)
-    with open(f'{file_name}===========>', 'wb') as f:
+    print(f'{file_name}===========>')
+    with open(file_name, 'wb') as f:
         for chunk in r.iter_content(block_size):
             if chunk:  # filter out keep-alive new chunks
                 f.write(chunk)
@@ -106,6 +107,6 @@ def recusiveappend(url):
 # recusiveappend('https://github.com/iampawan?tab=repositories')
 # for a in repository:
 #     print(a)
-setrepository('https://github.com/pkrawat1?tab=repositories')
+setrepository('https://github.com/kaina404?tab=repositories')
 getdwonloadlink()
 downloadlink()
